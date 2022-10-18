@@ -17,7 +17,7 @@ import (
 // https://localhost:8080/5/rsanitize-address
 // https://releases.llvm.org/5.0.0/tools/clang/docs/DiagnosticsReference.html#rsanitize-address
 
-func main() {
+func Main() {
 
 	sysLog, err := syslog.Dial("tcp", "localhost:1234",
 		syslog.LOG_WARNING|syslog.LOG_DAEMON, "pxy")
