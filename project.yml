@@ -1,20 +1,6 @@
 environment: {}
 parameters: {}
 packages:
-  - name: sample
-    environment: {}
-    parameters: {}
-    annotations: {}
-    functions:
-      - name: hello
-        binary: false
-        main: ''
-        runtime: 'go:default'
-        web: true
-        parameters: {}
-        environment: {}
-        annotations: {}
-        limits: {}
   - name: pxy
     environment: {}
     parameters: {}
