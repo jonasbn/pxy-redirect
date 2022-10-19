@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"log/syslog"
 	"net/http"
 	"net/url"
 	"strings"
@@ -18,19 +17,14 @@ import (
 // https://releases.llvm.org/5.0.0/tools/clang/docs/DiagnosticsReference.html#rsanitize-address
 
 func Main() {
+	main()
+}
 
-	sysLog, err := syslog.Dial("tcp", "localhost:1234",
-		syslog.LOG_WARNING|syslog.LOG_DAEMON, "pxy")
-
-	log.SetOutput(sysLog)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+func main() {
 
 	http.HandleFunc("/", redirect)
 
-	err = http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
