@@ -1,0 +1,6 @@
+name: pxy-redirect
+services:
+- name: web
+  github:
+    repo: jonasbn/pxy-redirect
+    branch: main
