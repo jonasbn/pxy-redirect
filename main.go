@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -13,24 +12,18 @@ import (
 // [X](https://<domain>/<version>/<fragment>)
 // eg. <domain>/<version>/<fragment>
 
-// https://pxy.nu/5/rsanitize-address
+// https://pxy.fi/5/rsanitize-address
 // https://localhost:8080/5/rsanitize-address
 // https://releases.llvm.org/5.0.0/tools/clang/docs/DiagnosticsReference.html#rsanitize-address
 
 func main() {
 
 	http.HandleFunc("/", redirect)
-	http.HandleFunc("/hello", getHello)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-}
-
-func getHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("got /hello request\n")
-	io.WriteString(w, "Hello, HTTP!\n")
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
