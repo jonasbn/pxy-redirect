@@ -17,7 +17,7 @@ import (
 // https://localhost:8080/5/rsanitize-address
 // https://releases.llvm.org/5.0.0/tools/clang/docs/DiagnosticsReference.html#rsanitize-address
 
-func Main() {
+func main() {
 
 	http.HandleFunc("/", redirect)
 	http.HandleFunc("/hello", getHello)
