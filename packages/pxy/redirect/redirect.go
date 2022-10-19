@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -19,11 +20,17 @@ import (
 func Main() {
 
 	http.HandleFunc("/", redirect)
+	http.HandleFunc("/hello", getHello)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
+}
+
+func getHello(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("got /hello request\n")
+	io.WriteString(w, "Hello, HTTP!\n")
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
