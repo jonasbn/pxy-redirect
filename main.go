@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -30,27 +31,51 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Received URL: >%s<\n", r.URL)
 
-	url, err := url.Parse(r.URL.String())
-	if err != nil {
-		log.Fatal(err)
+	url, parseErr := url.Parse(r.URL.String())
+	if parseErr != nil {
+		fmt.Printf("Unable to parse received URL: >%s<\n", r.URL)
+		http.Error(w, "Unable to parse received URL", http.StatusInternalServerError)
 	}
 
-	newURL := assembleNewURL(url)
+	fmt.Printf("Parsed URL: >%s<\n", url)
 
-	fmt.Printf("Redirecting to: >%s<\n", newURL)
-
-	http.Redirect(w, r, newURL, http.StatusFound)
+	if url.String() == "/" {
+		http.ServeFile(w, r, "index.html")
+	} else {
+		newURL, assembleErr := assembleNewURL(url)
+		if assembleErr == nil {
+			fmt.Printf("Redirecting to: >%s<\n", newURL)
+			http.Redirect(w, r, newURL, http.StatusFound)
+		} else {
+			fmt.Printf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
+			http.Error(w, "Unable to assemble URL", http.StatusBadRequest)
+		}
+	}
 }
 
-func assembleNewURL(url *url.URL) string {
+func assembleNewURL(url *url.URL) (string, error) {
 
 	s := strings.SplitN(url.Path, "/", 3)
-
-	fmt.Printf("%+q\n", s)
 
 	// 0 is empty because we split on "/" and the URL begins with "/"
 	// 1 == version
 	// 2 == fragment
 
-	return fmt.Sprintf("https://releases.llvm.org/%s.0.0/tools/clang/docs/DiagnosticsReference.html#%s", s[1], s[2])
+	if len(s) != 3 {
+		err := fmt.Errorf("insufficient parts in provided url %+v", s)
+		return "", err
+	}
+
+	_, err := strconv.Atoi(s[1])
+	if err != nil {
+		err := fmt.Errorf("first part of url is not a number: %+v", s)
+		return "", err
+	}
+
+	if s[2] == "" {
+		err := fmt.Errorf("second part of url is not a string: %+v", s)
+		return "", err
+	}
+
+	return fmt.Sprintf("https://releases.llvm.org/%s.0.0/tools/clang/docs/DiagnosticsReference.html#%s", s[1], s[2]), nil
 }
