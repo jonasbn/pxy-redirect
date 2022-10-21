@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // https://gist.github.com/hSATAC/5343225
@@ -19,6 +20,8 @@ import (
 
 func main() {
 
+	log.SetLevel(log.InfoLevel)
+
 	http.HandleFunc("/", redirect)
 
 	err := http.ListenAndServe(":8080", nil)
@@ -29,15 +32,17 @@ func main() {
 
 func redirect(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Printf("Received URL: >%s<\n", r.URL)
+	log.Infof("Received URL: >%s<\n", r.URL)
 
 	url, parseErr := url.Parse(r.URL.String())
 	if parseErr != nil {
-		fmt.Printf("Unable to parse received URL: >%s<\n", r.URL)
+		log.Errorf("Unable to parse received URL: >%s<\n", r.URL)
 		http.Error(w, "Unable to parse received URL", http.StatusInternalServerError)
+
+		return
 	}
 
-	fmt.Printf("Parsed URL: >%s<\n", url)
+	log.Debugf("Parsed URL: >%s<\n", url)
 
 	if url.String() == "/favicon.ico" {
 		http.ServeFile(w, r, "static/favicon.ico")
@@ -51,10 +56,10 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 	newURL, assembleErr := assembleNewURL(url)
 	if assembleErr == nil {
-		fmt.Printf("Redirecting to: >%s<\n", newURL)
+		log.Infof("Redirecting to: >%s<\n", newURL)
 		http.Redirect(w, r, newURL, http.StatusFound)
 	} else {
-		fmt.Printf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
+		log.Errorf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
 		http.Error(w, "Unable to assemble URL", http.StatusBadRequest)
 	}
 }
@@ -63,23 +68,25 @@ func assembleNewURL(url *url.URL) (string, error) {
 
 	s := strings.SplitN(url.Path, "/", 3)
 
+	log.Debugf("Parsed following parts: >%#v<\n", s)
+
 	// 0 is empty because we split on "/" and the URL begins with "/"
 	// 1 == version
 	// 2 == fragment
 
 	if len(s) != 3 {
-		err := fmt.Errorf("insufficient parts in provided url %+v", s)
+		err := fmt.Errorf("insufficient parts in provided url %q", s)
 		return "", err
 	}
 
 	_, err := strconv.Atoi(s[1])
 	if err != nil {
-		err := fmt.Errorf("first part of url is not a number: %+v", s)
+		err := fmt.Errorf("first part of url is not a number: %q", s)
 		return "", err
 	}
 
 	if s[2] == "" {
-		err := fmt.Errorf("second part of url is not a string: %+v", s)
+		err := fmt.Errorf("second part of url is not a string: %q", s)
 		return "", err
 	}
 
