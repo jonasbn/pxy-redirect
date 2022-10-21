@@ -40,7 +40,7 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Parsed URL: >%s<\n", url)
 
 	if url.String() == "/" {
-		http.ServeFile(w, r, "index.html")
+		http.ServeFile(w, r, "static/index.html")
 	} else {
 		newURL, assembleErr := assembleNewURL(url)
 		if assembleErr == nil {
