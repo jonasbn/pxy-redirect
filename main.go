@@ -39,17 +39,23 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Parsed URL: >%s<\n", url)
 
+	if url.String() == "/favicon.ico" {
+		http.ServeFile(w, r, "static/favicon.ico")
+		return
+	}
+
 	if url.String() == "/" {
 		http.ServeFile(w, r, "static/index.html")
+		return
+	}
+
+	newURL, assembleErr := assembleNewURL(url)
+	if assembleErr == nil {
+		fmt.Printf("Redirecting to: >%s<\n", newURL)
+		http.Redirect(w, r, newURL, http.StatusFound)
 	} else {
-		newURL, assembleErr := assembleNewURL(url)
-		if assembleErr == nil {
-			fmt.Printf("Redirecting to: >%s<\n", newURL)
-			http.Redirect(w, r, newURL, http.StatusFound)
-		} else {
-			fmt.Printf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
-			http.Error(w, "Unable to assemble URL", http.StatusBadRequest)
-		}
+		fmt.Printf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
+		http.Error(w, "Unable to assemble URL", http.StatusBadRequest)
 	}
 }
 
