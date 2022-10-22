@@ -42,9 +42,15 @@ The the request does not contain enough parts to assemble the redirect target UR
 
 #### first part of url is not a number
 
+The first part of the URL should be a number (integer), which is translated to a version number.
+
 #### second part of url is not a string
 
+The second part of the URL should be a string.
+
 ### Unable to parse received URL error (500)
+
+The URL could not be parsed.
 
 ### `ListenAndServe` fatal error
   
@@ -61,5 +67,5 @@ The error is not visible to the end-user as such, but the service will be unavai
 - [DigitalOcean][DO]
 
 [DO]: https://www.digitalocean.com/
-[LLVM]: releases.llvm.org/
+[LLVM]: https://releases.llvm.org/
 [pxy.fi]: https://pxy.fi/
