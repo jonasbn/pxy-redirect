@@ -47,6 +47,11 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 	log.Debugf("Parsed URL: >%s<\n", url)
 
+	if url.String() == "/robots.txt" {
+		http.ServeFile(w, r, "static/robots.txt")
+		return
+	}
+
 	if url.String() == "/favicon.ico" {
 		http.ServeFile(w, r, "static/favicon.ico")
 		return
