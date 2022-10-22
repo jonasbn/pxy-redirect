@@ -20,6 +20,9 @@ import (
 
 func main() {
 
+	log.SetFormatter(&log.TextFormatter{
+		DisableTimestamp: true,
+	})
 	log.SetLevel(log.InfoLevel)
 
 	http.HandleFunc("/", redirect)
