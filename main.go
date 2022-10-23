@@ -7,7 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 // https://gist.github.com/hSATAC/5343225
@@ -20,32 +21,29 @@ import (
 
 func main() {
 
-	log.SetFormatter(&log.TextFormatter{
-		DisableTimestamp: true,
-	})
-	log.SetLevel(log.InfoLevel)
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	http.HandleFunc("/", redirect)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Fatal().Msgf("ListenAndServe: %s", err)
 	}
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
 
-	log.Infof("Received URL: >%s<\n", r.URL)
+	log.Info().Msgf("Received URL: >%s<", r.URL)
 
 	url, parseErr := url.Parse(r.URL.String())
 	if parseErr != nil {
-		log.Errorf("Unable to parse received URL: >%s<\n", r.URL)
+		log.Error().Msgf("Unable to parse received URL: >%s<", r.URL)
 		http.Error(w, "Unable to parse received URL", http.StatusInternalServerError)
 
 		return
 	}
 
-	log.Debugf("Parsed URL: >%s<\n", url)
+	log.Debug().Msgf("Parsed URL: >%s<", url)
 
 	if url.String() == "/robots.txt" {
 		http.ServeFile(w, r, "static/robots.txt")
@@ -64,10 +62,10 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 	newURL, assembleErr := assembleNewURL(url)
 	if assembleErr == nil {
-		log.Infof("Redirecting to: >%s<\n", newURL)
+		log.Info().Msgf("Redirecting to: >%s<", newURL)
 		http.Redirect(w, r, newURL, http.StatusFound)
 	} else {
-		log.Errorf("Unable to assemble URL from: >%s< - %s\n", url, assembleErr)
+		log.Error().Msgf("Unable to assemble URL from: >%s< - %s", url, assembleErr)
 		http.Error(w, "Unable to assemble URL", http.StatusBadRequest)
 	}
 }
@@ -76,7 +74,7 @@ func assembleNewURL(url *url.URL) (string, error) {
 
 	s := strings.SplitN(url.Path, "/", 3)
 
-	log.Debugf("Parsed following parts: >%#v<\n", s)
+	log.Debug().Msgf("Parsed following parts: >%#v<", s)
 
 	// 0 is empty because we split on "/" and the URL begins with "/"
 	// 1 == version
