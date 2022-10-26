@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is service I created for deployment on [DigitalOcean][DO].
+This is service I created for deployment on [DigitalOcean][DO]. The service has been replace by a serverless function [pxy-redirect-ow-function][FUNCTION]
 
 It supports some documentation I have written up, which resulted in a bug. The bug could be observed when displaying a Markdown page on GitHub. which exceeded the size limit of what could be rendered a Markdown.
 
@@ -60,6 +60,7 @@ The error is not visible to the end-user as such, but the service will be unavai
 
 ## Resources and References
 
+- [pxy-redirect-ow-function][FUNCTION]
 - [My TIL collection: clang diagnostic flags](https://github.com/jonasbn/til/blob/master/clang/diagnostic_flags.md) (GitHub)
 - [My TIL collection: clang diagnostic flags](http://jonasbn.github.io/til/clang/diagnostic_flags.html) (website)
 - [clang diagnostic flags matrix generator](https://github.com/jonasbn/clang-diagnostic-flags-matrix)
@@ -69,3 +70,4 @@ The error is not visible to the end-user as such, but the service will be unavai
 [DO]: https://www.digitalocean.com/
 [LLVM]: https://releases.llvm.org/
 [pxy.fi]: https://pxy.fi/
+[FUNCTION]: https://github.com/jonasbn/pxy-redirect-ow-function
