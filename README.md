@@ -4,9 +4,7 @@
 
 This is service I created for deployment on [DigitalOcean][DO]. The service has been replace by a serverless function [pxy-redirect-ow-function][FUNCTION]
 
-It supports some documentation I have written up, which resulted in a bug. The bug could be observed when displaying a Markdown page on GitHub. which exceeded the size limit of what could be rendered a Markdown.
-
-The service is available at: [pxy.fi]
+It supports some documentation I have written up, which resulted in a bug. The bug could be observed when displaying a Markdown page on GitHub. which exceeded the size limit of what could be rendered a Markdown. Please see my [blog post][BLOG] for the long version.
 
 ## Description
 
@@ -71,3 +69,4 @@ The error is not visible to the end-user as such, but the service will be unavai
 [LLVM]: https://releases.llvm.org/
 [pxy.fi]: https://pxy.fi/
 [FUNCTION]: https://github.com/jonasbn/pxy-redirect-ow-function
+[BLOG]: https://dev.to/jonasbn/challenges-solutions-and-more-challenges-and-more-solutions-4j3f
