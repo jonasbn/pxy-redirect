@@ -14,7 +14,7 @@ The acceptable URLs being:
 
 - `/<version>/<fragment>`
 
-So the first part has to be a number and the second part a string corresponding to the equivalens on the [releases.llvm.org][LLVM] website.
+So the first part has to be a number and the second part a string corresponding to the equivalent on the [releases.llvm.org][LLVM] website.
 
 Example:
 
@@ -54,7 +54,7 @@ The URL could not be parsed.
   
 This error is emitted if the service is unable to start. The error message will contain details.
 
-The error is not visible to the end-user as such, but the service will be unavailble.
+The error is not visible to the end-user as such, but the service will be unavailable.
 
 ## Resources and References
 
