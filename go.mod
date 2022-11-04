@@ -1,6 +1,6 @@
 module github.com/jonasbn/pxy-redirect
 
-go 1.17
+go 1.19
 
 require github.com/rs/zerolog v1.28.0
 
