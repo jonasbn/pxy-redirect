@@ -2,7 +2,7 @@ module github.com/jonasbn/pxy-redirect
 
 go 1.17
 
-require github.com/rs/zerolog v1.32.0
+require github.com/rs/zerolog v1.33.0
 
 require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
