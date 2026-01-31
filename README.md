@@ -1,5 +1,8 @@
 # pxy-redirect
 
+> [!IMPORTANT]
+> This repository is deprecated. Please see [pxy-redirect-ow-function][FUNCTION] for the replacement serverless function.
+
 ## Introduction
 
 This is service I created for deployment on [DigitalOcean][DO]. The service has been replace by a serverless function [pxy-redirect-ow-function][FUNCTION]
