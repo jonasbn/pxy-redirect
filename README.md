@@ -70,6 +70,5 @@ The error is not visible to the end-user as such, but the service will be unavai
 
 [DO]: https://www.digitalocean.com/
 [LLVM]: https://releases.llvm.org/
-[pxy.fi]: https://pxy.fi/
 [FUNCTION]: https://github.com/jonasbn/pxy-redirect-ow-function
 [BLOG]: https://dev.to/jonasbn/challenges-solutions-and-more-challenges-and-more-solutions-4j3f
