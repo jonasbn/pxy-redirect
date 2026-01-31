@@ -1,6 +1,6 @@
 # pxy-redirect
 
-> [!IMPORTANT]
+> [!Archived]
 > This repository is deprecated. Please see [pxy-redirect-ow-function][FUNCTION] for the replacement serverless function.
 
 ## Introduction
