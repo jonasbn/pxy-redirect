@@ -1,7 +1,7 @@
 # pxy-redirect
 
-> [!Archived]
-> This repository is deprecated. Please see [pxy-redirect-ow-function][FUNCTION] for the replacement serverless function.
+> [!important]
+> This repository is deprecated and has been archived. Please see [pxy-redirect-ow-function][FUNCTION] for the replacement serverless function.
 
 ## Introduction
 
